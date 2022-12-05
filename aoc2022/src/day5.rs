@@ -4,7 +4,7 @@ use regex::Regex;
 pub fn run_part1() {
     let contents = fs::read_to_string("5_input.txt").expect("Cannot read input file");
 
-    let mut cols: Vec<Vec<char>> = (0..9).map(|_| Vec::new()).collect();
+    let mut cols: [Vec<char>; 9] = Default::default();
     let mut reading_positions = true;
     let re = Regex::new(r"^move (\d+) from (\d+) to (\d+)$").unwrap();
 
@@ -37,8 +37,8 @@ pub fn run_part1() {
 			// all state was read, we are processing move instructions one by one now
             let m = re.captures_iter(line).next().unwrap();
             let count = m[1].parse::<usize>().unwrap();
-            let from = m[2].parse::<usize>().unwrap() - 1;
-            let to = m[3].parse::<usize>().unwrap() - 1;
+            let from  = m[2].parse::<usize>().unwrap() - 1;
+            let to    = m[3].parse::<usize>().unwrap() - 1;
 
             let n = cols[from].len();
             let mut tosplit = cols[from].split_off(n - count);
@@ -54,8 +54,7 @@ pub fn run_part1() {
 
 	print!("Day5.1 result: ");
     for col in cols {
-        let c = col.last().unwrap();
-        print!("{}", c);
+        print!("{}", col.last().unwrap());
     }
 	println!("");
 }
