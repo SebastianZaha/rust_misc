@@ -11,18 +11,17 @@ pub fn run_part1() {
     for line in contents.lines() {
         let mut chars = line.chars();
         if reading_positions {
-            if line.len() == 0 { 
-                println!("found empty line");
+            if line.is_empty() {
+                println!("found empty line, finished reading stacks");
                 reading_positions = false;
                 for c in cols.iter_mut() {
                     c.reverse();
-                    println!("{:?}", c);
+                    println!("read stack: {:?}", c);
                 }
             } else {
                 if let Some(c) = chars.nth(1) {
                     if c == '1' {
-                        // column numbers "informative" line
-                        println!("found line with numbers");
+                        println!("found 'informative' line with numbers, skipping");
                         continue;
                     } else if c != ' ' {
                         cols[0].push(c);
@@ -35,6 +34,7 @@ pub fn run_part1() {
                 }
             }
         } else {
+			// all state was read, we are processing move instructions one by one now
             let m = re.captures_iter(line).next().unwrap();
             let count = m[1].parse::<usize>().unwrap();
             let from = m[2].parse::<usize>().unwrap() - 1;
@@ -52,10 +52,12 @@ pub fn run_part1() {
         }
     }
 
+	print!("Day5.1 result: ");
     for col in cols {
         let c = col.last().unwrap();
-        println!("{}", c);
+        print!("{}", c);
     }
+	println!("");
 }
 
 pub fn run_part2() {
