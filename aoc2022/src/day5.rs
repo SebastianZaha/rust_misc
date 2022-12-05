@@ -35,6 +35,14 @@ pub fn run_part1() {
             }
         } else {
 			// all state was read, we are processing move instructions one by one now
+            //
+            // alternative non-regex way to parse found later (comment for future reference)
+            //   let it = line.split_whitespace().into_iter().skip(1).step_by(2);
+            //   let count: usize = it.next().unwrap().parse().unwrap();
+            //   let from         = it.next().unwrap().parse().unwrap();
+            //   let to           = it.next().unwrap().parse().unwrap();
+            //
+
             let m = re.captures_iter(line).next().unwrap();
             let count = m[1].parse::<usize>().unwrap();
             let from  = m[2].parse::<usize>().unwrap() - 1;
