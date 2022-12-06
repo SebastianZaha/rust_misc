@@ -1,6 +1,10 @@
-pub mod day5;
+use anyhow::Result;
 
-fn main() {
-    day5::run_part1();
-    day5::run_part2();
+pub mod day6;
+
+fn main() -> Result<()> {
+    day6::run_part1()?;
+    day6::run_part2()?;
+
+    Ok(())
 }
